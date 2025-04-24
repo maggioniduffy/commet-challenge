@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider       = "postgresql"
+  url            = env("DATABASE_URL")
+  directUrl      = env("DIRECT_URL")
+}
+
+
+model Sale {
+  id            String     @id @unique()
+  amount        Float
+  salesperson   String
+  date          DateTime
+  comission     Float?
+  crmId         Int
+  crm           CRM        @relation(fields: [crmId], references: [id])
+}
+
+model CRM {
+  id            Int       @id @unique()
+  created_at    DateTime
+  original_crm  UpcomingCRM?
+  sales         Sale[]
+}
+
+model UpcomingCRM {
+  id        Int       @id @default(autoincrement())
+  name      String
+  mimeType  String
+  size      Int
+  path      String // Local path or cloud URL
+  created_at DateTime @default(now())
+  crmId     Int?       @unique
+  crm       CRM?      @relation(fields: [crmId], references: [id])
+}
