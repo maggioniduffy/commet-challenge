@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import Table from "./components/Table";
 
-export async function getFiles() {
+async function getFiles() {
   try {
     const data = await prisma.upcomingCRM.findMany();
     const files = await Promise.all(
