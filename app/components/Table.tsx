@@ -14,7 +14,7 @@ const Table = ({ files }: Props) => {
   const [totalComissions, setTotalComissions] = useState<number>(0);
 
   const transform = () => {
-    let aux_sales: Sale[] = [];
+    const aux_sales: Sale[] = [];
 
     files?.forEach((file) => {
       if (file?.type == "json") {

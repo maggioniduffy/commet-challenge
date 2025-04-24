@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma";
-import { UpcomingCMR } from "@/models";
 import Table from "./components/Table";
 
 export async function getFiles() {
