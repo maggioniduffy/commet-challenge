@@ -9,13 +9,6 @@ interface Props {
   files?: ({ file: any; type: string } | undefined)[];
 }
 
-const props = new Map<number, any>();
-props.set(1, "id");
-props.set(2, "amount");
-props.set(3, "salesperson");
-props.set(4, "date");
-props.set(5, "comission");
-
 const Table = ({ files }: Props) => {
   const [sales, setSales] = useState<Sale[]>();
 

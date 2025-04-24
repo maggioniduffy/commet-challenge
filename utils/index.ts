@@ -1,5 +1,7 @@
 import { Sale } from "@/models";
 
+const keys = ["id", "amount", "salesperson", "date"];
+
 export function parseJSON(data: string): Sale[] {
   try {
     const objects = data.replaceAll("[", "").replace("]", "").split("},");
@@ -10,10 +12,8 @@ export function parseJSON(data: string): Sale[] {
       if (i < 0) {
         txt = txt + "}";
       }
-      console.log("data: ", txt);
-      const raw = JSON.parse(txt);
 
-      const keys = ["id", "amount", "salesperson", "date"];
+      const raw = JSON.parse(txt);
       const values = Object.values(raw);
       let map = new Map();
       keys.forEach((key, i) => map.set(key, values[i]));
@@ -22,7 +22,6 @@ export function parseJSON(data: string): Sale[] {
       return Object.fromEntries(map) as Sale;
     });
 
-    console.log("cmr", cmr);
     return cmr;
   } catch (error) {
     console.error("Error parsing JSON:", error);
@@ -33,8 +32,6 @@ export function parseJSON(data: string): Sale[] {
 export function parseCSV(data: string): Sale[] {
   try {
     const lines = data.split("\r\n");
-    console.log("lines", lines);
-    const keys = ["id", "amount", "salesperson", "date"];
     lines.shift();
     const cmr: Sale[] = lines.map((line) => {
       const values = line.split(",");
@@ -45,7 +42,6 @@ export function parseCSV(data: string): Sale[] {
       return Object.fromEntries(map) as Sale;
     });
 
-    console.log("cmr", cmr);
     return cmr;
   } catch (error) {
     console.error("Error parsing CSV:", error);

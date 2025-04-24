@@ -23,7 +23,6 @@ export async function getFiles() {
       })
     );
 
-    console.log("files", await files[1]);
     return files;
   } catch (error) {
     console.log("Error fetching files:", error);
