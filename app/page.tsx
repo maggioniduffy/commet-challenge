@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import Table from "./components/Table";
+import CustomTable from "./components/Table";
 
 async function getFiles() {
   try {
@@ -36,8 +36,8 @@ export default async function Home() {
   const files = await getFiles();
 
   return (
-    <div className="flex flex-col items-center justify-items-center min-h-screen h-screen w-screen">
-      <main className="w-full text-center gap-2 flex flex-col items-center justify-center md:p-10 min-h-92">
+    <div className="flex flex-col items-center justify-items-center min-h-screen w-11/12 mx-auto">
+      <main className="w-full text-center flex flex-col items-center justify-center min-h-92">
         <h1 className="text-4xl text-gray-900 font-bold w-full p-2 drop-shadow-md">
           {" "}
           COMMET{" "}
@@ -46,22 +46,42 @@ export default async function Home() {
           {" "}
           Files to transform:{" "}
         </h3>
-        <div className="flex gap-2 justify-center h-fit w-full md:w-96 flex-wrap">
+        <div className="flex justify-center h-full w-full md:w-fit flex-wrap gap-2">
           {files && files.length > 0 ? (
             files.map((file) => (
-              <p
-                key={file?.file}
-                className="text-gray-800 font-mono shadow mx-8 my-2 border border-cyan-100 rounded-lg p-1 bg-white"
-              >
-                {" "}
-                {file?.file}
-              </p>
+              <div key={file?.id} className="text-left h-full">
+                {file?.type == "csv" ? (
+                  <p
+                    key={file?.file}
+                    className="w-fit text-gray-800 font-mono shadow my-2 border border-cyan-100 rounded-lg p-1 bg-white"
+                  >
+                    {file &&
+                      file.file.split("\r\n").map((line, i) => {
+                        return (
+                          <span key={line + i}>
+                            {line.split(",").map((item) => {
+                              return <span key={item + i}>{item + ", "}</span>;
+                            })}
+                            <br />
+                          </span>
+                        );
+                      })}
+                  </p>
+                ) : (
+                  <pre
+                    key={file?.file}
+                    className="text-gray-800 font-mono shadow my-2 border border-cyan-100 rounded-lg p-1 bg-white"
+                  >
+                    {file && JSON.stringify(JSON.parse(file.file), null, 2)}
+                  </pre>
+                )}
+              </div>
             ))
           ) : (
             <span></span>
           )}
         </div>
-        <Table files={files} />
+        <CustomTable files={files} />
       </main>
     </div>
   );

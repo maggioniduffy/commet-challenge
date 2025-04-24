@@ -4,12 +4,22 @@ import { columns } from "@/constants";
 import { Sale, File } from "@/models";
 import { parseCSV, parseJSON } from "@/utils";
 import React, { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface Props {
   files?: (File | undefined)[];
 }
 
-const Table = ({ files }: Props) => {
+const CustomTable = ({ files }: Props) => {
   const [sales, setSales] = useState<Sale[]>();
   const [totalComissions, setTotalComissions] = useState<number>(0);
 
@@ -71,7 +81,7 @@ const Table = ({ files }: Props) => {
   };
 
   return (
-    <>
+    <div className="flex place-items-center flex-col flex-wrap justify-center w-full md:p-10">
       <div className="flex gap-4">
         <button
           className="rounded bg-cyan-600 rounded shadow p-2 text-white font-semibold cursor-pointer text-md hover:bg-gray-200 hover:text-cyan-600 mt-4"
@@ -87,48 +97,51 @@ const Table = ({ files }: Props) => {
           Reset
         </button>
       </div>
-      <table className="w-full md:w-fit h-full bg-white min-h-56 my-8 shadow-xl rounded-lg mx-2">
-        <thead className="flex w-full justify-between">
+      <Table className="bg-white min-h-56 my-8 shadow-xl rounded-lg overflow-x-scroll mx-0 w-full">
+        <TableHeader className="flex justify-between rounded-t-lg">
           {columns.map((column) => (
-            <tr key={column} className="bg-gray-100 w-full border-b-2 border">
-              <th className="p-4 text-left text-cyan-600 font-semibold">
+            <TableRow
+              key={column}
+              className="bg-gray-100 w-full border-b-2 border w-32 md:w-full"
+            >
+              <TableCell className="p-4 text-left text-cyan-600 font-semibold">
                 {column}
-              </th>
-            </tr>
+              </TableCell>
+            </TableRow>
           ))}
-        </thead>
-        <tbody className="rounded-xl flex flex-col gap-2">
+        </TableHeader>
+        <TableBody className="rounded-xl flex flex-col">
           {sales && sales.length > 0 && (
             <>
               {sales.map((sale, i) => {
                 return (
-                  <tr
+                  <TableRow
                     key={sale + " " + i}
-                    className="w-full text-gray-500 flex justify-between"
+                    className="text-gray-500 flex justify-between"
                   >
                     {Object.values(sale).map((value, i) => {
                       return (
-                        <td
+                        <TableCell
                           key={value + " " + i}
-                          className="p-4 text-left text-gray-600 font-medium h-20 w-full md:w-32"
+                          className="p-4 text-left text-gray-600 font-medium h-20 w-32 md:w-fit"
                         >
                           <p> {value} </p>
-                        </td>
+                        </TableCell>
                       );
                     })}
-                  </tr>
+                  </TableRow>
                 );
               })}
-              <tr className="bg-cyan-600 font-semibold h-12 rounded-b-xl  px-4">
-                <td className="flex place-items-center justify-end h-full gap-3 ">
+              <TableRow className="bg-cyan-600 font-semibold h-12 rounded-b-xl px-4 hover:bg-cyan-700">
+                <TableCell className="flex place-items-center justify-end h-full gap-3 text-white">
                   <p> Total comissions: </p>
                   <p> {totalComissions > 0 && totalComissions} </p>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             </>
           )}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
       <button
         className="rounded bg-cyan-600 w-20 rounded-lg shadow p-2 text-white font-semibold cursor-pointer text-md hover:bg-gray-200 hover:text-cyan-600 mt-4"
         onClick={() => save()}
@@ -136,8 +149,8 @@ const Table = ({ files }: Props) => {
         {" "}
         Save
       </button>
-    </>
+    </div>
   );
 };
 
-export default Table;
+export default CustomTable;
