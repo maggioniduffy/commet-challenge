@@ -42,7 +42,7 @@ export default async function Home() {
           {" "}
           COMMET{" "}
         </h1>
-        <h3 className="text-cyan-700 text-xl font-medium text-left w-full p-2 drop-shadow-md">
+        <h3 className="text-gray-800 text-xl font-medium text-left w-full p-2 drop-shadow-md">
           {" "}
           Files to transform:{" "}
         </h3>
