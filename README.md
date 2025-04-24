@@ -1,36 +1,49 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Project Structure 🧬
+
+```bash
+├── app
+│   ├── api
+│   │   └── prisma
+│   └── components
+├── constants
+├── generated
+│   └── prisma
+│       └── runtime
+├── lib
+├── models
+├── prisma
+│   └── migrations
+│       └── 20250423230703_init
+├── public
+└── utils
+npm run dev
+```
+
+## Getting Started 🏁
 
 First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Enviroment Variables ⚙️
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- DATABASE_URL
+- DIRECT_URL
+- NEXT_PUBLIC_API_BASE_URL
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Stack ❇️
 
-## Learn More
+- Next.js
+- Prisma
+- Supabase
+- Aws
 
-To learn more about Next.js, take a look at the following resources:
+## Usage 💯
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This app was created for a [Commet](https://commet.co/es/) challenge. The goal was to emulate a little of they work by taking in two CRM files, with different formats and types, and to transform and merge them in a single CRM file.
+After achieving this, you can Save the data into the Supabase DB using the Prisma ORM, making this a serverless app.
+Also, the files are stored in a AWS S3 bucket pointed from the database, making it easy to store images, and to upload more CRM files if desired.
