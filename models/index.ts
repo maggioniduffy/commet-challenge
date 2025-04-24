@@ -15,3 +15,15 @@ export interface UpcomingCMR {
   path: string;
   crmId: number | null;
 }
+
+export interface CRM {
+  id?: number;
+  original_crm_id?: number;
+  created_at: Date;
+}
+
+export interface File {
+  file: any;
+  type: string;
+  id: number;
+}

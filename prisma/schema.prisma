@@ -14,7 +14,7 @@ datasource db {
 
 
 model Sale {
-  id            String     @id @unique()
+  id            String     @id @default(uuid()) @unique()
   amount        Float
   salesperson   String
   date          DateTime
@@ -24,10 +24,10 @@ model Sale {
 }
 
 model CRM {
-  id            Int       @id @unique()
-  created_at    DateTime
-  original_crm  UpcomingCRM?
-  sales         Sale[]
+  id                  Int             @id @default(autoincrement()) @unique
+  created_at          DateTime
+  sales               Sale[]
+  original_crms       UpcomingCRM[]   @relation("CRMToUpcomingCRM") // one-to-many relation
 }
 
 model UpcomingCRM {
@@ -37,6 +37,6 @@ model UpcomingCRM {
   size      Int
   path      String // Local path or cloud URL
   created_at DateTime @default(now())
-  crmId     Int?       @unique
-  crm       CRM?      @relation(fields: [crmId], references: [id])
+  crm_id    Int?
+  crm       CRM?   @relation("CRMToUpcomingCRM", fields: [crm_id], references: [id])
 }

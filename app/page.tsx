@@ -4,7 +4,7 @@ import Table from "./components/Table";
 
 export async function getFiles() {
   try {
-    const data: UpcomingCMR[] = await prisma.upcomingCRM.findMany();
+    const data = await prisma.upcomingCRM.findMany();
     const files = await Promise.all(
       data.map(async (file) => {
         const response = await fetch(file.path);
@@ -14,11 +14,15 @@ export async function getFiles() {
 
         if (file.mimeType == "json") {
           const fileContent = await response.json();
-          return { file: JSON.stringify(fileContent), type: file.mimeType };
+          return {
+            file: JSON.stringify(fileContent),
+            type: file.mimeType,
+            id: file.id,
+          };
         }
         if (file.mimeType == "csv") {
           const fileContent = await response.text();
-          return { file: fileContent, type: file.mimeType };
+          return { file: fileContent, type: file.mimeType, id: file.id };
         }
       })
     );
@@ -31,7 +35,7 @@ export async function getFiles() {
 
 export default async function Home() {
   const files = await getFiles();
-  console.log("files client", files);
+
   return (
     <div className="flex flex-col items-center justify-items-center min-h-screen h-screen w-screen">
       <main className="w-full text-center gap-2 flex flex-col items-center justify-center md:p-10 min-h-92">
@@ -39,9 +43,9 @@ export default async function Home() {
           {" "}
           COMMET{" "}
         </h1>
-        <h3 className="text-cyan-700 text-xl font-medium">
+        <h3 className="text-cyan-700 text-xl font-medium text-left w-full p-2 drop-shadow-md">
           {" "}
-          Files to transform{" "}
+          Files to transform:{" "}
         </h3>
         <div className="flex gap-2 justify-center h-fit w-full md:w-96 flex-wrap">
           {files && files.length > 0 ? (
