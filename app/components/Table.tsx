@@ -55,7 +55,10 @@ const Table = ({ files }: Props) => {
 
       console.log("CRM created");
 
-      setTimeout(() => reset(), 1000);
+      setTimeout(() => {
+        reset();
+        alert("Sales saved successfully");
+      }, 500);
     } catch (err) {
       console.error(err);
       alert("Failed to save CRM.");
