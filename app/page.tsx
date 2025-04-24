@@ -33,15 +33,22 @@ export default async function Home() {
   const files = await getFiles();
   console.log("files client", files);
   return (
-    <div className="flex flex-col items-center bg-gray-200 justify-items-center min-h-screen h-screen w-screen">
-      <main className="w-full text-center gap-5 flex flex-col items-center justify-center p-10 min-h-92">
-        <h3 className="text-black text-2xl font-bold"> Files to transform </h3>
-        <div className="flex gap-2 justify-center min-w-full h-fit w-fit">
+    <div className="flex flex-col items-center justify-items-center min-h-screen h-screen w-screen">
+      <main className="w-full text-center gap-2 flex flex-col items-center justify-center md:p-10 min-h-92">
+        <h1 className="text-4xl text-gray-900 font-bold w-full p-2 drop-shadow-md">
+          {" "}
+          COMMET{" "}
+        </h1>
+        <h3 className="text-cyan-700 text-xl font-medium">
+          {" "}
+          Files to transform{" "}
+        </h3>
+        <div className="flex gap-2 justify-center h-fit w-full md:w-96 flex-wrap">
           {files && files.length > 0 ? (
             files.map((file) => (
               <p
                 key={file?.file}
-                className="text-gray-800 font-medium shadow w-6/12 border rounded-lg p-2 bg-gray-100"
+                className="text-gray-800 font-mono shadow mx-8 my-2 border border-cyan-100 rounded-lg p-1 bg-white"
               >
                 {" "}
                 {file?.file}

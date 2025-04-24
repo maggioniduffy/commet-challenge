@@ -37,17 +37,17 @@ const Table = ({ files }: Props) => {
   return (
     <>
       <button
-        className="rounded bg-gray-100 rounded shadow p-2 text-black font-medium cursor-pointer text-xl hover:bg-gray-300"
+        className="rounded bg-cyan-600 rounded shadow p-2 text-white font-semibold cursor-pointer text-md hover:bg-gray-200 hover:text-cyan-600 mt-4"
         onClick={() => transform()}
       >
         {" "}
         Transform{" "}
       </button>
-      <table className="w-full h-full bg-white min-h-56">
+      <table className="w-full md:w-fit h-full bg-white min-h-56 my-8 shadow-md rounded-lg mx-2">
         <thead className="flex w-full justify-between">
           {columns.map((column) => (
             <tr key={column} className="bg-gray-100 w-full border-b-2 border">
-              <th className="p-4 text-left text-gray-600 font-semibold">
+              <th className="p-4 text-left text-cyan-600 font-semibold">
                 {column}
               </th>
             </tr>
@@ -60,15 +60,15 @@ const Table = ({ files }: Props) => {
               return (
                 <tr
                   key={sale + " " + i}
-                  className="w-full border-b-2 border text-black"
+                  className="w-full text-gray-500 flex justify-between"
                 >
                   {Object.values(sale).map((value, i) => {
                     return (
                       <td
                         key={value + " " + i}
-                        className="p-4 text-left text-gray-600 font-semibold"
+                        className="p-4 text-left text-gray-600 font-medium h-20 w-full md:w-32"
                       >
-                        {value}
+                        <p> {value} </p>
                       </td>
                     );
                   })}
