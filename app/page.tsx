@@ -38,10 +38,11 @@ export default async function Home() {
   return (
     <div className="flex flex-col items-center justify-items-center min-h-screen w-11/12 mx-auto">
       <main className="w-full text-center flex flex-col items-center justify-center min-h-92">
-        <h1 className="text-4xl text-gray-900 font-bold w-full p-2 drop-shadow-md">
+        <h1 className="text-5xl text-gray-900 font-extrabold w-full p-2 drop-shadow-md">
           {" "}
-          COMMET{" "}
+          Commet Challenge{" "}
         </h1>
+        <p className="text-gray-400"> by Faustino Maggioni Duffy </p>
         <h3 className="text-cyan-600 text-xl font-medium text-center w-full p-2 drop-shadow-md">
           {" "}
           Files to transform:{" "}
