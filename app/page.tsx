@@ -14,14 +14,14 @@ async function getFiles() {
         if (file.mimeType == "json") {
           const fileContent = await response.json();
           return {
-            file: JSON.stringify(fileContent),
+            content: JSON.stringify(fileContent),
             type: file.mimeType,
             id: file.id,
           };
         }
         if (file.mimeType == "csv") {
           const fileContent = await response.text();
-          return { file: fileContent, type: file.mimeType, id: file.id };
+          return { content: fileContent, type: file.mimeType, id: file.id };
         }
       })
     );
@@ -53,11 +53,11 @@ export default async function Home() {
               <div key={file?.id} className="text-left h-full">
                 {file?.type == "csv" ? (
                   <p
-                    key={file?.file}
+                    key={file?.content}
                     className="w-fit text-gray-800 font-mono shadow my-2 border border-cyan-100 rounded-lg p-1 bg-white"
                   >
                     {file &&
-                      file.file.split("\r\n").map((line, i) => {
+                      file.content?.split("\r\n").map((line, i) => {
                         return (
                           <span key={line + i}>
                             {line.split(",").map((item) => {
@@ -70,10 +70,10 @@ export default async function Home() {
                   </p>
                 ) : (
                   <pre
-                    key={file?.file}
+                    key={file?.content}
                     className="text-gray-800 font-mono shadow my-2 border border-cyan-100 rounded-lg p-1 bg-white"
                   >
-                    {file && JSON.stringify(JSON.parse(file.file), null, 2)}
+                    {file && JSON.stringify(JSON.parse(file.content), null, 2)}
                   </pre>
                 )}
               </div>

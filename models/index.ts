@@ -23,7 +23,7 @@ export interface CRM {
 }
 
 export interface File {
-  file: any;
+  content: string;
   type: string;
   id: number;
 }

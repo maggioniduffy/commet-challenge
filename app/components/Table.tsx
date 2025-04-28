@@ -28,13 +28,13 @@ const CustomTable = ({ files }: Props) => {
 
     files?.forEach((file) => {
       if (file?.type == "json") {
-        const json = parseJSON(file.file);
+        const json = parseJSON(file.content);
         json.forEach((j) => {
           aux_sales.push(j);
         });
       }
       if (file?.type == "csv") {
-        const csv = parseCSV(file.file);
+        const csv = parseCSV(file.content);
         console.log("csv", csv);
         csv.forEach((j) => {
           aux_sales.push(j);
