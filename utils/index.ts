@@ -45,7 +45,6 @@ export function parseJSON(data: string): Sale[] {
 
       const raw = JSON.parse(txt);
       const values = Object.values(raw);
-      let map = new Map();
       return getObject(values);
     });
 

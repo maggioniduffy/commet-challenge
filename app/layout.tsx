@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Commet Challende",
+  title: "Commet Challenge",
   description: "Comission calculator & file parser",
   authors: [{ name: "maggioniduffy" }],
 };

@@ -7,36 +7,35 @@ generator client {
 }
 
 datasource db {
-  provider       = "postgresql"
-  url            = env("DATABASE_URL")
-  directUrl      = env("DIRECT_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
-
 model Sale {
-  id            String     @id @default(uuid()) @unique()
-  amount        Float
-  salesperson   String
-  date          DateTime
-  comission     Float?
-  crmId         Int
-  crm           CRM        @relation(fields: [crmId], references: [id])
+  id          String   @id @unique() @default(uuid())
+  amount      Float
+  salesperson String
+  date        DateTime
+  comission   Float?
+  crmId       Int
+  crm         CRM      @relation(fields: [crmId], references: [id])
 }
 
 model CRM {
-  id                  Int             @id @default(autoincrement()) @unique
-  created_at          DateTime
-  sales               Sale[]
-  original_crms       UpcomingCRM[]   @relation("CRMToUpcomingCRM") // one-to-many relation
+  id            Int           @id @unique @default(autoincrement())
+  created_at    DateTime
+  sales         Sale[]
+  original_crms UpcomingCRM[] @relation("CRMToUpcomingCRM") // one-to-many relation
 }
 
 model UpcomingCRM {
-  id        Int       @id @default(autoincrement())
-  name      String
-  mimeType  String
-  size      Int
-  path      String // Local path or cloud URL
+  id         Int      @id @default(autoincrement())
+  name       String
+  mimeType   String
+  size       Int
+  path       String // Local path or cloud URL
   created_at DateTime @default(now())
-  crm_id    Int?
-  crm       CRM?   @relation("CRMToUpcomingCRM", fields: [crm_id], references: [id])
+  crm_id     Int?
+  crm        CRM?     @relation("CRMToUpcomingCRM", fields: [crm_id], references: [id])
 }

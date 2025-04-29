@@ -7,13 +7,12 @@ import React, { useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
-  TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Skeleton } from "@/components/ui/skeleton";
+import SaveMessage from "./SaveMessage";
 
 interface Props {
   files?: (File | undefined)[];
@@ -22,6 +21,9 @@ interface Props {
 const CustomTable = ({ files }: Props) => {
   const [sales, setSales] = useState<Sale[]>();
   const [totalComissions, setTotalComissions] = useState<number>(0);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const transform = () => {
     const aux_sales: Sale[] = [];
@@ -53,6 +55,7 @@ const CustomTable = ({ files }: Props) => {
 
   const save = async () => {
     try {
+      setLoading(true);
       console.log("Saving sales", sales);
       const response = await fetch("/api/prisma", {
         method: "POST",
@@ -66,12 +69,21 @@ const CustomTable = ({ files }: Props) => {
       console.log("CRM created");
 
       setTimeout(() => {
+        setLoading(false);
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 1000);
         reset();
-        alert("Sales saved successfully");
       }, 500);
     } catch (err) {
       console.error(err);
-      alert("Failed to save CRM.");
+
+      setLoading(false);
+      setError("Failed to save sales");
+      setTimeout(() => {
+        setError(null);
+      }, 1000);
     }
   };
 
@@ -85,13 +97,13 @@ const CustomTable = ({ files }: Props) => {
       <div className="flex gap-4">
         <button
           className="rounded bg-cyan-600 rounded shadow p-2 text-white font-semibold cursor-pointer text-md hover:bg-gray-200 hover:text-cyan-600 mt-4"
-          onClick={() => transform()}
+          onClick={transform}
         >
           {" "}
           Transform{" "}
         </button>
         <button
-          onClick={() => reset()}
+          onClick={reset}
           className="rounded bg-gray-200 rounded shadow p-2 text-cyan-600 font-semibold cursor-pointer text-md hover:bg-cyan-600 hover:text-gray-200 mt-4"
         >
           Reset
@@ -142,13 +154,12 @@ const CustomTable = ({ files }: Props) => {
           )}
         </TableBody>
       </Table>
-      <button
-        className="rounded bg-cyan-600 w-20 rounded-lg shadow p-2 text-white font-semibold cursor-pointer text-md hover:bg-gray-200 hover:text-cyan-600 mt-4"
-        onClick={() => save()}
-      >
-        {" "}
-        Save
-      </button>
+      <SaveMessage
+        loading={loading}
+        success={success}
+        error={error}
+        save={save}
+      />
     </div>
   );
 };
