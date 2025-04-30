@@ -13,7 +13,7 @@ export interface UpcomingCMR {
   size: number;
   created_at: Date;
   path: string;
-  crmId: number | null;
+  crmId?: number | null;
 }
 
 export interface CRM {

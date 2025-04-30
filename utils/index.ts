@@ -1,4 +1,4 @@
-import { Sale } from "@/models";
+import { File, Sale, UpcomingCMR } from "@/models";
 
 const keys = ["id", "amount", "salesperson", "date"];
 
@@ -69,4 +69,33 @@ export function parseCSV(data: string): Sale[] {
     console.error("Error parsing CSV:", error);
     throw new Error("Something went wrong or invalid data");
   }
+}
+
+export async function getContent(
+  file: UpcomingCMR,
+  response: Response
+): Promise<File> {
+  let fileContent = "";
+  let content;
+  console.log("file", file.mimeType == "csv");
+  if (file.mimeType == "json") {
+    fileContent = await response.json();
+    content = JSON.stringify(fileContent);
+  } else {
+    if (file.mimeType == "csv") {
+      const fileContent = await response.text();
+      content = fileContent;
+    } else {
+      console.log;
+      throw new Error("Invalid file type");
+    }
+  }
+
+  const type = file.mimeType;
+  const id = file.id;
+  return {
+    content,
+    type,
+    id,
+  };
 }

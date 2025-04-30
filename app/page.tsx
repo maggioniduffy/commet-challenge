@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import CustomTable from "./components/Table";
 import PrettyFiles from "./components/PrettyFiles";
+import { UpcomingCMR } from "@/models";
+import { getContent } from "@/utils";
 
 async function getFiles() {
   try {
@@ -24,18 +26,7 @@ async function getFiles() {
           throw new Error("Failed to fetch file");
         }
 
-        if (file.mimeType == "json") {
-          const fileContent = await response.json();
-          return {
-            content: JSON.stringify(fileContent),
-            type: file.mimeType,
-            id: file.id,
-          };
-        }
-        if (file.mimeType == "csv") {
-          const fileContent = await response.text();
-          return { content: fileContent, type: file.mimeType, id: file.id };
-        }
+        return await getContent(file, response);
       })
     );
 
