@@ -6,19 +6,7 @@ import { getContent } from "@/utils";
 
 async function getFiles() {
   try {
-    let data;
-    try {
-      data = await prisma.upcomingCRM.findMany({ skip: 0 });
-    } catch (error: { code: string } | any) {
-      if (error.code === "42P05") {
-        // Retry once if we hit the prepared statement error
-        data = await prisma.upcomingCRM.findMany({
-          skip: 0,
-        });
-      } else {
-        throw error;
-      }
-    }
+    const data = await prisma.upcomingCRM.findMany({ skip: 0 });
     const files = await Promise.all(
       data.map(async (file) => {
         const response = await fetch(file.path);
